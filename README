@@ -25,10 +25,118 @@ Supports:
 TODO:
  1 User interface as a PoC.
  2 Unit testing.
- 3 Find a better way to handle error messages (such as a dictionary).
- 4 Handle CAPTCHA requirements.
+ 3 onRequestSuccess/onRequestError should return "result" object with + info.
+ 4 Find a better way to handle error messages (such as a dictionary).
+ 5 Handle CAPTCHA requirements.
 
 References:
  * http://code.google.com/p/pyrfeed/wiki/GoogleReaderAPI
  * http://anirudhs.chaosnet.org/blog/2009.11.04.html
  * http://blog.martindoms.com/2009/08/15/using-the-google-reader-api-part-1/
+
+
+
+Usage:
+
+
+// Initialize and setup listeners
+
+var reader:GoogleReader = new GoogleReader();
+reader.onRequestSuccess = reqSuccess;
+reader.onRequestError = reqError;
+
+
+// Authentication
+
+"OK" = reader.authenticate("koolaid@gmail.com", "ohyeah!", "myAuthCallback");
+
+
+// Get user's RSS subscriptions
+
+{
+	"subscriptions":[
+		{
+			"id":"feed/http://rss.cnn.com/rss/cnn_topstories.rss",
+			"title":"CNN.com - Breaking News, ...",
+			"categories":[],
+			"sortid":"FF1EEAB5",
+			"firstitemmsec":"1308122816904"
+		},
+		{
+			"id":"feed/http://feedproxy.google.com/TechCrunch",
+			"title":"TechCrunch",
+			"categories":[
+				{
+					"id":"user/35397781436425093193/label/Tech",
+					"label":"Tech"
+				}
+			],
+			"sortid":"53F9A2C3",
+			"firstitemmsec":"1308146223866"
+		}
+	]
+} = reader.getSubscriptions("mySubsCallback");
+
+
+// User information
+
+{
+  "userId":"26397781466425093193",
+  "userName":"KoolAid",
+  "userProfileId":"219036081246954240029",
+  "userEmail":"koolaid@gmail.com",
+  "isBloggerUser":false,
+  "signupTimeSec":0,
+  "isMultiLoginEnabled":false
+} = reader.getUser("myUserCallback");
+
+
+// Get subscription's items
+
+{
+	"feed":{
+		"subtitle": {
+			"value": "CNN.com delivers up-to-the-minute news and information..."
+		},
+		"entry": {
+			"list": {
+				"length": 10,
+				"source": [
+					{
+						"title": {
+							"value": "Libya says it's holding talks with U.S."
+						},
+						"id": {
+							"value": "tag:google.com,2005:reader/item/5a387ff43c98bd73"
+						},
+						"category": {
+							"list": {
+								"length": 2,
+								"source": [
+									{
+										"type": {
+										    "scheme": "http://www.google.com/reader/",
+										    "term": "user/35.../state/com.google/reading-list",
+										    "label": "reading-list"
+										},
+										"type": {
+										    "scheme": "http://www.google.com/reader/",
+										    "term": "user/35.../state/com.google/fresh",
+										    "label": "fresh"
+										}
+									}
+								]
+							}
+						},
+						"summary": {
+							"value": "Libyan and U.S. .. governments held <a href=\"http://r..."
+						}
+					}
+				]
+			}
+		}
+	}
+} =
+reader.getItemsForFeed("feed/http://feedproxy.google.com/TechCrunch", 10, "myItemsCallback");
+
+

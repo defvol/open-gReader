@@ -93,50 +93,6 @@ reader.onRequestError = reqError;
 
 // Get subscription's items
 
-{
-	"feed":{
-		"subtitle": {
-			"value": "CNN.com delivers up-to-the-minute news and information..."
-		},
-		"entry": {
-			"list": {
-				"length": 10,
-				"source": [
-					{
-						"title": {
-							"value": "Libya says it's holding talks with U.S."
-						},
-						"id": {
-							"value": "tag:google.com,2005:reader/item/5a387ff43c98bd73"
-						},
-						"category": {
-							"list": {
-								"length": 2,
-								"source": [
-									{
-										"type": {
-										    "scheme": "http://www.google.com/reader/",
-										    "term": "user/35.../state/com.google/reading-list",
-										    "label": "reading-list"
-										},
-										"type": {
-										    "scheme": "http://www.google.com/reader/",
-										    "term": "user/35.../state/com.google/fresh",
-										    "label": "fresh"
-										}
-									}
-								]
-							}
-						},
-						"summary": {
-							"value": "Libyan and U.S. .. governments held <a href=\"http://r..."
-						}
-					}
-				]
-			}
-		}
-	}
-} =
 reader.getItemsForFeed("feed/http://feedproxy.google.com/TechCrunch", 10, "myItemsCallback");
 
 
